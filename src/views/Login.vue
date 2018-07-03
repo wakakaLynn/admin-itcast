@@ -45,8 +45,9 @@
           //只有校验通过才执行函数
           if (valid) {
             checkUser(this.form).then(res=>{
-              //如果登录成功要跳转到首页
+              //如果登录成功要跳转到首页,将token保存到localStorage中
               if(res.meta.status ===200){
+                localStorage.setItem('mytoken',res.data.token)
                 this.$router.push({name:'Home'})
               } else {
                 //如果失败展示提示信息
