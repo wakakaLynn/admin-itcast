@@ -11,8 +11,8 @@
     </el-row>
     <el-row>
       <el-col :span="24">
-        <el-input placeholder="请输入内容" class="search-input">
-          <el-button slot="append" icon="el-icon-search"></el-button>
+        <el-input placeholder="请输入内容" class="search-input" v-model="query" @keydown.native.enter="initList">
+          <el-button slot="append" icon="el-icon-search" @click="initList"></el-button>
         </el-input>
         <el-button type="success" plain>添加用户</el-button>
       </el-col>
@@ -77,6 +77,7 @@
     data() {
       return {
         userList: [],
+        query:'',
         value2:''
       }
     },
@@ -92,7 +93,7 @@
       },
       //初始化表格数据
       initList(){
-        getUserList({params:{query:'',pagenum:1,pagesize:3}}).then(res =>{
+        getUserList({params:{query:this.query,pagenum:1,pagesize:3}}).then(res =>{
           console.log(res.data)
           this.userList = res.data.users
         })
