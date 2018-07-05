@@ -60,10 +60,10 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="1"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        :page-sizes="[1, 2, 3, 4]"
+        :page-size="1"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+        :total="total">
       </el-pagination>
     </div>
 
@@ -78,7 +78,10 @@
       return {
         userList: [],
         query:'',
-        value2:''
+        value2:'',
+        total:0,
+        pagesize:1,
+        pagenum:1
       }
     },
     created (){
@@ -87,15 +90,20 @@
     methods: {
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`)
+        this.pagesize = val
+        this.initList()
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`)
+        this.pagenum = val
+        this.initList()
       },
       //初始化表格数据
       initList(){
-        getUserList({params:{query:this.query,pagenum:1,pagesize:3}}).then(res =>{
+        getUserList({params:{query:this.query,pagenum:this.pagenum,pagesize:this.pagesize}}).then(res =>{
           console.log(res.data)
           this.userList = res.data.users
+          this.total = res.data.total
         })
       }
     }
