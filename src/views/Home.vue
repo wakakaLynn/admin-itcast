@@ -75,7 +75,7 @@
         }
       }
       getUserList(params).then(res =>{
-        console.log(res.data)
+        //console.log(res.data)
       })
     },
     methods: {
