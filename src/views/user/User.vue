@@ -41,8 +41,7 @@
       </el-table-column>
       <el-table-column label="用户状态">
         <template slot-scope="scope">
-          <el-switch
-            v-model="value2">
+          <el-switch v-model="scope.row.mg_state" @change="changeUserState(scope.row)">
           </el-switch>
         </template>
       </el-table-column>
@@ -72,13 +71,12 @@
 </template>
 
 <script>
-  import {getUserList} from '@/api'
+  import {getUserList,changeUserState} from '@/api'
   export default{
     data() {
       return {
         userList: [],
         query:'',
-        value2:'',
         total:0,
         pagesize:1,
         pagenum:1
@@ -89,22 +87,40 @@
     },
     methods: {
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`)
+        //console.log(`每页 ${val} 条`)
         this.pagesize = val
         this.initList()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`)
+        //console.log(`当前页: ${val}`)
         this.pagenum = val
         this.initList()
       },
       //初始化表格数据
       initList(){
         getUserList({params:{query:this.query,pagenum:this.pagenum,pagesize:this.pagesize}}).then(res =>{
-          console.log(res.data)
+          //console.log(res.data)
           this.userList = res.data.users
           this.total = res.data.total
         })
+      },
+      //改变用户状态
+      changeUserState(row){
+        //console.log(row)
+        changeUserState({uid:row.id,type:row.mg_state}).then(res=>{
+          if(res.meta.status ===200){
+            this.$message({
+              type:'success',
+              message:'修改用户状态成功'
+            })
+          }else{
+          this.$message({
+            type:'warning',
+            message:res.meta.msg
+          })
+          }
+        })
+
       }
     }
 
