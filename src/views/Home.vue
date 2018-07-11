@@ -5,6 +5,7 @@
       <el-aside width="auto">
         <div class="logo"></div>
         <el-menu
+          :unique-opened="true"
           :router="true"
           :collapse="isCollapse"
           class="el-menu-admin"
@@ -23,14 +24,21 @@
                 <span slot="title">用户列表</span>
               </el-menu-item>
           </el-submenu>
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <el-menu-item index="3">
-            <i class="el-icon-document"></i>
-            <span slot="title">导航三</span>
-          </el-menu-item>
+          <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>权限管理</span>
+            </template>
+            <el-menu-item index="/rights">
+              <i class="el-icon-menu"></i>
+              <span slot="title">权限列表</span>
+            </el-menu-item>
+            <el-menu-item index="/roles">
+              <i class="el-icon-menu"></i>
+              <span slot="title">角色列表</span>
+            </el-menu-item>
+          </el-submenu>
+          
           <el-menu-item index="4">
             <i class="el-icon-setting"></i>
             <span slot="title">导航四</span>
@@ -80,10 +88,10 @@
     },
     methods: {
       handleOpen(key, keyPath) {
-        console.log(key, keyPath)
+        //console.log(key, keyPath)
       },
       handleClose(key, keyPath) {
-        console.log(key, keyPath)
+        //console.log(key, keyPath)
       },
       toggleCollapse() {
         this.isCollapse = !this.isCollapse
