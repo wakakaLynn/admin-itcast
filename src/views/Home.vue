@@ -38,7 +38,7 @@
               <span slot="title">角色列表</span>
             </el-menu-item>
           </el-submenu>
-          
+
           <el-menu-item index="4">
             <i class="el-icon-setting"></i>
             <span slot="title">导航四</span>
