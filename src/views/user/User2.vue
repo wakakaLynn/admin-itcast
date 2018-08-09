@@ -277,7 +277,7 @@
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
-        }).then(() => {
+        }).then((res) => {
           deleteUserBy(row.id).then(res=>{
             this.$message({
               type: 'success',

@@ -69,4 +69,7 @@ export const addRole = params => {
 export const grantRoleRight = (roleId,rids) => {
   return axios.post( `roles/${roleId}/rights`,rids).then(res=>res.data)
 }
-
+//左侧权限菜单
+export const getMenus = () => {
+  return axios.get('menus').then(res=>res.data)
+}
