@@ -24,7 +24,18 @@
         <el-tab-pane label="基本信息" name="first">基本信息</el-tab-pane>
         <el-tab-pane label="商品参数" name="second">商品参数</el-tab-pane>
         <el-tab-pane label="商品属性" name="third">商品属性</el-tab-pane>
-        <el-tab-pane label="商品图片" name="fourth">商品图片</el-tab-pane>
+        <el-tab-pane label="商品图片" name="fourth">
+          <el-upload
+            action="http://localhost:8888/api/private/v1/upload"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            list-type="picture"
+            :headers="setHeader()"
+            :on-success="handleSuccess"
+            >
+            <el-button size="small" type="primary">点击上传</el-button>
+          </el-upload>
+        </el-tab-pane>
         <el-tab-pane label="商品内容" name="fifth">商品内容</el-tab-pane>
       </el-tabs>
 
@@ -37,7 +48,7 @@
     data(){
       return {
         active:0,
-        activeName:'first'
+        activeName:'first',
       }
     },
     methods: {
@@ -62,7 +73,28 @@
           default:
             this.active = 0
         }
+      },
+
+      handleRemove(file, fileList) {
+        console.log(file, fileList)
+      },
+      handlePreview(file) {
+        console.log(file)
+      },
+
+      setHeader(){
+        let token = localStorage.getItem('mytoken')
+        return {Authorization:token}
+      },
+      handleSuccess(res,file,fileList){
+        if(res.meta.status ===200){
+          this.$message({
+            type:'success',
+            message:res.meta.msg
+          })
+        }
       }
+
     }
   }
 </script>
