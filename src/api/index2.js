@@ -74,6 +74,10 @@ export const getMenus = () => {
   return axios.get('menus').then(res=>res.data)
 }
 //获取商品分类信息
-export const getGoodsCategory = (params) => {
+export const getGoodsCategory = params => {
   return axios.get('categories',{params:params}).then(res=>res.data)
+}
+//添加分类
+export const addCategories = params => {
+  return axios.post('categories',params).then(res=>res.data)
 }
