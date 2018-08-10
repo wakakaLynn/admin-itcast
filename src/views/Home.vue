@@ -5,6 +5,7 @@
       <el-aside width="auto">
         <div class="logo"></div>
         <el-menu
+          :unique-opened="true"
           :router="true"
           :collapse="isCollapse"
           class="el-menu-admin"
@@ -13,28 +14,17 @@
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b">
-          <el-submenu index="1">
+          <el-submenu :index="item.path" v-for="item in menuData" :key="item.id">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>用户管理</span>
+              <span>{{item.authName}}</span>
             </template>
-              <el-menu-item index="/user">
+              <el-menu-item :index="tag.path" v-for="tag in item.children" :key="tag.id">
                 <i class="el-icon-menu"></i>
-                <span slot="title">用户列表</span>
+                <span slot="title">{{tag.authName}}</span>
               </el-menu-item>
           </el-submenu>
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <el-menu-item index="3">
-            <i class="el-icon-document"></i>
-            <span slot="title">导航三</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
-          </el-menu-item>
+
         </el-menu>
       </el-aside>
       <el-container>
@@ -59,11 +49,12 @@
   </div>
 </template>
 <script>
-  import {getUserList} from '@/api'
+  import {getUserList,getMenus} from '@/api/index2.js'
   export default{
     data () {
       return{
-        isCollapse:false
+        isCollapse:false,
+        menuData:[]
       }
     },
     mounted(){
@@ -78,12 +69,20 @@
         //console.log(res.data)
       })
     },
+    created(){
+      getMenus().then(res=>{
+        //console.log(res.data)
+        if(res.meta.status===200){
+           this.menuData = res.data
+        }
+      })
+    },
     methods: {
       handleOpen(key, keyPath) {
-        console.log(key, keyPath)
+        //console.log(key, keyPath)
       },
       handleClose(key, keyPath) {
-        console.log(key, keyPath)
+        //console.log(key, keyPath)
       },
       toggleCollapse() {
         this.isCollapse = !this.isCollapse

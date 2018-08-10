@@ -57,6 +57,7 @@
       </el-table-column>
 
     </el-table>
+    <!--分页设置-->
     <div class="page">
       <el-pagination
         @size-change="handleSizeChange"
@@ -277,7 +278,7 @@
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
-        }).then(() => {
+        }).then((res) => {
           deleteUserBy(row.id).then(res=>{
             this.$message({
               type: 'success',
